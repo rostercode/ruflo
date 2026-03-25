@@ -1,0 +1,13 @@
+{
+  "_comment": "SENTNL SANDBOX: Add this to VS Code Claude Code settings under mcpServers",
+  "ruflo-sandbox": {
+    "command": "node",
+    "args": ["/Users/chase/Desktop/ruflo-sandbox/v3/@claude-flow/cli/bin/cli.js", "mcp", "start"],
+    "env": {
+      "ANTHROPIC_API_KEY": "",
+      "CLAUDE_FLOW_AUTO_UPDATE": "false",
+      "CLAUDE_FLOW_DEBUG": "true",
+      "NODE_ENV": "development"
+    }
+  }
+}
