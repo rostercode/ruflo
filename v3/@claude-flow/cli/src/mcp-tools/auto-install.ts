@@ -38,51 +38,10 @@ export async function autoInstallPackage(
   packageName: string,
   options: AutoInstallOptions = {}
 ): Promise<boolean> {
-  const { timeout = 60000, save = false, silent = false } = options;
-
-  // Validate package name to prevent command injection (CVE fix)
-  // Valid npm package names: @scope/name or name, alphanumeric with - . _ ~
-  const validPackageName = /^(@[a-z0-9-~][a-z0-9-._~]*\/)?[a-z0-9-~][a-z0-9-._~]*(@[a-z0-9-._~]+)?$/i;
-  if (!validPackageName.test(packageName)) {
-    if (!silent) {
-      console.error(`[claude-flow] Invalid package name: ${packageName}`);
-    }
-    return false;
-  }
-
-  // Only attempt once per session
-  if (installAttempts.has(packageName)) {
-    return false;
-  }
-  installAttempts.add(packageName);
-
-  try {
-    if (!silent) {
-      console.error(`[claude-flow] Auto-installing ${packageName}...`);
-    }
-
-    // Use spawn with array args to prevent shell injection
-    const args = ['install', packageName, save ? '--save' : '--no-save'];
-    const result = spawnSync('npm', args, {
-      stdio: silent ? 'pipe' : ['pipe', 'pipe', 'pipe'],
-      timeout,
-      shell: false, // Explicitly disable shell
-    });
-
-    if (result.status !== 0) {
-      throw new Error(result.stderr?.toString() || 'Installation failed');
-    }
-
-    if (!silent) {
-      console.error(`[claude-flow] Successfully installed ${packageName}`);
-    }
-    return true;
-  } catch (error) {
-    if (!silent) {
-      console.error(`[claude-flow] Failed to auto-install ${packageName}: ${error}`);
-    }
-    return false;
-  }
+  // SENTNL SANDBOX: Auto-install disabled for security.
+  // No silent npm installs allowed. All packages must be installed manually.
+  console.error(`[claude-flow][SANDBOX] Auto-install BLOCKED for: ${packageName}`);
+  return false;
 }
 
 /**

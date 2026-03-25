@@ -1112,10 +1112,15 @@ Analyze the above codebase context and provide your response following the forma
     }
   ): Promise<{ success: boolean; output: string; tokensUsed?: number; error?: string }> {
     return new Promise((resolve) => {
+      // SENTNL SANDBOX: Explicit env allowlist only. Never spread full process.env.
       const env: Record<string, string> = {
-        ...(process.env as Record<string, string>),
+        ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY || '',
         CLAUDE_CODE_HEADLESS: 'true',
         CLAUDE_CODE_SANDBOX_MODE: options.sandbox,
+        NODE_ENV: process.env.NODE_ENV || 'development',
+        PATH: process.env.PATH || '',
+        HOME: process.env.HOME || '',
+        TMPDIR: process.env.TMPDIR || '/tmp',
       };
 
       // Set model

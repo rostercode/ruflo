@@ -419,11 +419,14 @@ export class ContainerWorkerPool extends EventEmitter {
       ];
 
       // Add environment variables
-      const env = {
-        ...this.config.env,
+      // SENTNL SANDBOX: Explicit env allowlist only. No config.env spreading.
+      const env: Record<string, string> = {
         ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY || '',
         CLAUDE_CODE_HEADLESS: 'true',
         CLAUDE_CODE_SANDBOX_MODE: this.config.defaultSandbox,
+        NODE_ENV: process.env.NODE_ENV || 'development',
+        PATH: process.env.PATH || '',
+        HOME: process.env.HOME || '',
       };
 
       for (const [key, value] of Object.entries(env)) {

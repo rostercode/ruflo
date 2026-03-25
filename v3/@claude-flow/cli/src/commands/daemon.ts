@@ -257,8 +257,14 @@ async function startBackgroundDaemon(projectRoot: string, quiet: boolean, maxCpu
     detached: !isWin,  // detached is POSIX-only; Windows uses windowsHide
     stdio: ['ignore', fs.openSync(logFile, 'a'), fs.openSync(logFile, 'a')],
     env: {
-      ...process.env,
+      // SENTNL SANDBOX: Explicit env allowlist only. Never spread full process.env.
+      ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY || '',
+      PATH: process.env.PATH || '',
+      HOME: process.env.HOME || '',
+      NODE_ENV: process.env.NODE_ENV || 'development',
+      TMPDIR: process.env.TMPDIR || '/tmp',
       CLAUDE_FLOW_DAEMON: '1',
+      CLAUDE_FLOW_AUTO_UPDATE: 'false',
       // Prevent macOS SIGHUP kill when terminal closes
       ...(process.platform === 'darwin' ? { NOHUP: '1' } : {}),
     },
