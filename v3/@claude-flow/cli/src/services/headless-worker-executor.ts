@@ -268,12 +268,17 @@ export const LOCAL_WORKER_TYPES: LocalWorkerType[] = [
 ];
 
 /**
- * Model ID mapping
+ * Model ID mapping — use short aliases so they auto-resolve to the latest
+ * snapshot. Hardcoded dated IDs (e.g. claude-sonnet-4-5-20250929) go stale
+ * when Anthropic retires them, causing 100% worker failure (#1431).
+ *
+ * Users can override per-worker via the `model` field in daemon-state.json
+ * or the ANTHROPIC_MODEL environment variable.
  */
 const MODEL_IDS: Record<ModelType, string> = {
-  sonnet: 'claude-sonnet-4-5-20250929',
-  opus: 'claude-opus-4-6',
-  haiku: 'claude-haiku-4-5-20251001',
+  sonnet: 'sonnet',
+  opus: 'opus',
+  haiku: 'haiku',
 };
 
 /**
@@ -761,6 +766,10 @@ export class HeadlessWorkerExecutor extends EventEmitter {
     for (const [executionId, entry] of entries) {
       clearTimeout(entry.timeout);
       entry.process.kill('SIGTERM');
+      // SIGKILL fallback after 5s to prevent orphan processes (#1395 Bug 6)
+      setTimeout(() => {
+        try { if (!entry.process.killed) entry.process.kill('SIGKILL'); } catch { /* already dead */ }
+      }, 5000).unref();
       this.emit('cancelled', { executionId });
       cancelled++;
     }
@@ -1121,16 +1130,19 @@ Analyze the above codebase context and provide your response following the forma
         PATH: process.env.PATH || '',
         HOME: process.env.HOME || '',
         TMPDIR: process.env.TMPDIR || '/tmp',
+        // Fix #1395 Bug 2: Workers fail inside active Claude Code session.
+        // Setting CLAUDE_ENTRYPOINT=worker bypasses the nested-session check.
+        CLAUDE_ENTRYPOINT: 'worker',
       };
 
-      // Set model
-      env.ANTHROPIC_MODEL = MODEL_IDS[options.model];
+      // Set model — user env override > config override > default alias
+      env.ANTHROPIC_MODEL = process.env.ANTHROPIC_MODEL || MODEL_IDS[options.model];
 
       // Spawn claude CLI process
       const child = spawn('claude', ['--print', prompt], {
         cwd: this.projectRoot,
         env,
-        stdio: ['pipe', 'pipe', 'pipe'],
+        stdio: ['ignore', 'pipe', 'pipe'], // 'ignore' closes stdin at spawn — fixes #1395 where claude --print blocks on EOF
         windowsHide: true, // Prevent phantom console windows on Windows
       });
 
