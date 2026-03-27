@@ -1,4 +1,4 @@
-# SENTNL Ruflo Sandbox — Local Config
+# Batman Batcave — Local Config
 
 ## Local Build Only
 All commands use the local binary at `v3/@claude-flow/cli/bin/cli.js`.

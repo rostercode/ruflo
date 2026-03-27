@@ -1,8 +1,8 @@
 {
-  "_comment": "SENTNL SANDBOX: Add this to VS Code Claude Code settings under mcpServers",
-  "ruflo-sandbox": {
+  "_comment": "BATCAVE MCP config template. Copy this block into VS Code Claude Code settings under mcpServers. Replace <BATCAVE_DIR> with the absolute path to your batcave directory. Server name should match mcp.serverName in batman.config.json.",
+  "batman-batcave": {
     "command": "node",
-    "args": ["/Users/chase/Desktop/ruflo-sandbox/v3/@claude-flow/cli/bin/cli.js", "mcp", "start"],
+    "args": ["<BATCAVE_DIR>/v3/@claude-flow/cli/bin/cli.js", "mcp", "start"],
     "env": {
       "ANTHROPIC_API_KEY": "",
       "CLAUDE_FLOW_AUTO_UPDATE": "false",

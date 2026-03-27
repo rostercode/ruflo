@@ -1,5 +1,5 @@
 {
-  "_comment": "SENTNL SANDBOX: PreToolUse hooks REMOVED (no command interception). Stop hook REMOVED (no session tracking). Only safe read-only PostToolUse metrics kept.",
+  "_comment": "BATCAVE: PreToolUse hooks REMOVED (no command interception). Stop hook REMOVED (no session tracking). Only safe read-only PostToolUse metrics kept.",
   "hooks": {
     "PostToolUse": [
       {

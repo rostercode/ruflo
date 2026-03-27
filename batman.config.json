@@ -1,0 +1,29 @@
+{
+  "project": {
+    "name": "SENTNL",
+    "path": "~/Desktop/SENTNL PROJECT",
+    "branch": "sentnl-sandbox"
+  },
+  "upstream": {
+    "repo": "ruvnet/ruflo",
+    "lockedCommit": "0590bf2",
+    "version": "3.5.42",
+    "auditDate": "2026-03-25"
+  },
+  "security": {
+    "blockedEnvPatterns": [
+      "SUPABASE",
+      "TELEGRAM",
+      "OPENAI",
+      "GOOGLE",
+      "STRIPE",
+      "TWITTER",
+      "SLACK",
+      "PINATA",
+      "WEB3"
+    ]
+  },
+  "mcp": {
+    "serverName": "batman-batcave"
+  }
+}

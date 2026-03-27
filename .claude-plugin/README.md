@@ -1,6 +1,6 @@
-# SENTNL Ruflo Sandbox Plugin
+# Batman Batcave Plugin
 
-Hardened, sandboxed fork of claude-flow v3.5.42 for SENTNL use.
+Hardened, sandboxed fork of claude-flow v3.5.42. Project-specific config in batman.config.json.
 
 ## Rules
 - This plugin runs ONLY the local build at `v3/@claude-flow/cli/bin/cli.js`
@@ -8,7 +8,7 @@ Hardened, sandboxed fork of claude-flow v3.5.42 for SENTNL use.
 - NEVER auto-install packages
 - NEVER enable PreToolUse, SessionStart, SessionEnd, or Stop hooks
 - Only PostToolUse echo logging is permitted
-- Zero access to: Supabase, Telegram, OpenAI, Google, Stripe, Pinata keys
+- Blocked env patterns configured via batman.config.json
 
 ## MCP Server
 Single local MCP server — no npm registry, no remote servers:

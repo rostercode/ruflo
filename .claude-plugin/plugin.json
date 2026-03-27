@@ -1,9 +1,9 @@
 {
-  "name": "ruflo-sentnl-sandbox",
+  "name": "batman-batcave",
   "version": "3.5.42",
-  "description": "SENTNL sandboxed Ruflo — local build only, no npm registry",
+  "description": "Batman Batcave — hardened Ruflo fork, local build only, no npm registry",
   "author": {
-    "name": "SENTNL"
+    "name": "Batcave"
   },
   "license": "MIT",
   "category": "development",
@@ -12,10 +12,10 @@
     "node": ">=20.0.0"
   },
   "mcpServers": {
-    "ruflo-sandbox": {
+    "batman-batcave": {
       "command": "node",
-      "args": ["/Users/chase/Desktop/ruflo-sandbox/v3/@claude-flow/cli/bin/cli.js", "mcp", "start"],
-      "description": "Local Ruflo MCP server — sandboxed, no npm registry",
+      "args": ["v3/@claude-flow/cli/bin/cli.js", "mcp", "start"],
+      "description": "Local Batcave MCP server — sandboxed, no npm registry",
       "optional": false
     }
   }

@@ -1,5 +1,5 @@
 {
-  "_comment": "SENTNL SANDBOX: Stripped all upstream hooks, auto-start, auto-scan, custom instructions, npx permissions, and attribution. Only safe minimal config remains.",
+  "_comment": "BATCAVE: Stripped all upstream hooks, auto-start, auto-scan, custom instructions, npx permissions, and attribution. Only safe minimal config remains.",
   "model": "claude-sonnet-4-6",
   "permissions": {
     "allow": [
